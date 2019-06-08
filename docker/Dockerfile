@@ -7,7 +7,7 @@ RUN echo 'deb http://ftp.cz.debian.org/debian unstable main' > /etc/apt/sources.
     echo 'deb http://ftp.cz.debian.org/debian testing main' > /etc/apt/sources.list.d/testing.list && \
     echo 'APT::Default-Release "stable";' > /etc/apt/apt.conf.d/99defaultrelease
 
-RUN apt-get update && apt-get install -y wget unzip make
+RUN apt-get update && apt-get install -y wget unzip make libboost-dev libboost-filesystem-dev libboost-iostreams-dev zlib1g-dev
 RUN apt-get -t unstable install -y clang-8 lld-8
 RUN apt-get -t testing install -y cmake
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-8 100 && \

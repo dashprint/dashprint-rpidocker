@@ -81,7 +81,7 @@ cd boost_1_70_0
 ./bootstrap.sh --with-toolset=clang
 echo -e 'using clang : 8.0.0 : clang++-8 : <compileflags>-stdlib=libc++ <compileflags>--sysroot=/sysroot <compileflags>-target <compileflags>arm-linux-gnueabihf <compileflags>-march=armv6 <compileflags>-mfpu=vfp <compileflags>-mfloat-abi=hard <compileflags>-ffunction-sections <compileflags>-fdata-sections <linkflags>-target <linkflags>arm-linux-gnueabihf <linkflags>-fuse-ld=lld <linkflags>--sysroot=/sysroot <abi>aapcs <address-model>32 <architecture>arm <binary-format>elf <threading>multi <toolset>clang <sysroot>/sysroot ;' > ./tools/build/src/user-config.jam
 
-./bjam --toolset=clang-8.0.0 link=static --prefix=/sysroot/usr/local -j4 install
+./bjam --toolset=clang-8.0.0 link=static abi=aapcs address-model=32 architecture=arm binary-format=elf threading=multi --prefix=/sysroot/usr/local -j4 install
 cd .. && rm -rf boost_1_70_0
 END
 
