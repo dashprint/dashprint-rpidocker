@@ -88,3 +88,26 @@ END
 docker commit $(cat image.cid) lubosd/dashprint-rpidocker:1.0
 docker rm $(cat image.cid)
 
+echo "Compiling libavformat..."
+rm -f image.cid
+
+docker run --cidfile image.cid -i lubosd/dashprint-rpidocker:1.0 /bin/bash -s <<END
+set -e
+
+cd /root
+wget https://ffmpeg.org/releases/ffmpeg-4.1.4.tar.bz2
+tar xf ffmpeg-4.1.4.tar.bz2 && rm -f ffmpeg-4.1.4.tar.bz2
+cd ffmpeg-4.1.4
+
+CFLAGS="--target=arm-linux-gnueabihf -ffunction-sections -fdata-sections" LDFLAGS="-fuse-ld=lld --target=arm-linux-gnueabihf" ./configure --disable-avdevice --disable-swresample --disable-swscale --disable-postproc --disable-avfilter --disable-encoders --disable-decoders --disable-protocols --disable-muxers --enable-muxer=mp4 --disable-demuxers --enable-demuxer=h264 --disable-bsfs --enable-bsf=h264_metadata --disable-parsers --enable-parser=h264 --disable-network --enable-small --enable-cross-compile --sysroot=/sysroot --arch=armhf --target-os=linux --cc=clang-8 --cpu=arm1176jzf-s --disable-asm --host_cc=clang-8 --disable-ffprobe
+
+make -j4
+make install DESTDIR=/sysroot
+
+cd /root
+rm -rf ffmpeg-4.1.4
+END
+
+docker commit $(cat image.cid) lubosd/dashprint-rpidocker:1.0
+docker rm $(cat image.cid)
+
