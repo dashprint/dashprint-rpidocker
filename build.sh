@@ -99,7 +99,7 @@ wget https://ffmpeg.org/releases/ffmpeg-4.1.4.tar.bz2
 tar xf ffmpeg-4.1.4.tar.bz2 && rm -f ffmpeg-4.1.4.tar.bz2
 cd ffmpeg-4.1.4
 
-CFLAGS="--target=arm-linux-gnueabihf -ffunction-sections -fdata-sections" LDFLAGS="-fuse-ld=lld --target=arm-linux-gnueabihf" ./configure --disable-avdevice --disable-swresample --disable-swscale --disable-postproc --disable-avfilter --disable-encoders --disable-decoders --disable-protocols --disable-muxers --enable-muxer=mp4 --disable-demuxers --enable-demuxer=h264 --disable-bsfs --enable-bsf=h264_metadata --disable-parsers --enable-parser=h264 --disable-network --enable-small --enable-cross-compile --sysroot=/sysroot --arch=armhf --target-os=linux --cc=clang-8 --cpu=arm1176jzf-s --disable-asm --host_cc=clang-8 --disable-ffprobe
+CFLAGS="--target=arm-linux-gnueabihf -ffunction-sections -fdata-sections" LDFLAGS="-fuse-ld=lld --target=arm-linux-gnueabihf" ./configure --disable-avdevice --disable-swresample --disable-swscale --disable-postproc --disable-avfilter --disable-encoders --disable-protocols --disable-muxers --enable-muxer=mp4 --disable-demuxers --enable-demuxer=h264 --disable-bsfs --enable-bsf=h264_metadata --disable-parsers --enable-parser=h264 --disable-network --enable-small --enable-cross-compile --sysroot=/sysroot --arch=armhf --target-os=linux --cc=clang-8 --cpu=arm1176jzf-s --disable-asm --host_cc=clang-8 --disable-ffprobe --disable-decoders --enable-decoder=h264
 
 make -j4
 make install DESTDIR=/sysroot
